@@ -9,10 +9,10 @@ using namespace std;
 #define SortAscending(a) sort(a.begin(), a.end());
 #define SortDescending(a) sort(a.begin(), a.end(), greater<>());
 
-// AtCoder Beginner Contest 110 D
+#include "GreatestCommonDivisor.cpp"
+
 int main() {
-    vector<int> a(3);
-    cin >> a[0] >> a[1] >> a[2];
-    SortAscending(a);
-    cout << a[0] + a[1] + a[2] * 10 << endl;
+    int A, B;
+    cin >> A >> B;
+    cout << GreatestCommonDivisor(A, B) << endl;
 }
