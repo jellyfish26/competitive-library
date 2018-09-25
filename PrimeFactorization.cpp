@@ -3,7 +3,6 @@
 //
 
 #include <bits/stdc++.h>
-#pragma once
 using namespace std;
 
 vector<pair<long long, long long> > PrimeFactorization(long long int a) {
