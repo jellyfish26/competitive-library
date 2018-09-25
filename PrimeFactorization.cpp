@@ -2,6 +2,10 @@
 // PrimeFactorization
 //
 
+#include <bits/stdc++.h>
+#pragma once
+using namespace std;
+
 vector<pair<long long, long long> > PrimeFactorization(long long int a) {
     vector<pair<long long, long long> > returnVector;
     for (long long int i = 2; i * 1 <= a; ++i) {
