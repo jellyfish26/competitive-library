@@ -3,8 +3,7 @@
 //
 
 #include <bits/stdc++.h>
-#include "Value.cpp"
-#pragma once
+#include "Value.cpp"s
 using namespace std;
 
 long long int fac[Value().MAX], finv[Value().MAX], inv[Value().MAX];

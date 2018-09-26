@@ -15,6 +15,8 @@ using namespace std;
 #define SortAscending(a) sort(a.begin(), a.end())
 #define SortDescending(a) sort(a.begin(), a.end(), greater<>())
 
+#include "PrimeNumberExtraction.cpp"
+
 vector<VectorType> VectorInput(long long int a) {
     vector<VectorType> returnVector;
     VectorType temp;
@@ -26,9 +28,10 @@ vector<VectorType> VectorInput(long long int a) {
 }
 
 int main() {
-    int N, L;
-    cin >> N >> L;
-    auto words = VectorInput(N);
-    SortAscending(words);
-    cout << VectorStringTotal(words) << endl;
+    int N;
+    cin >> N;
+    auto ans = PrimeNumberExtraction().Eratosthenes(N);
+    for (int an : ans) {
+        cout << an << endl;
+    }
 }
