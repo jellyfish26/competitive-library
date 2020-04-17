@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 // Last updated 2020-4-18, ABC139-F Engines
 struct Vertex {
     double x, y;
@@ -40,11 +41,11 @@ struct Vertex {
 
     Vertex operator/(double divide) const { return Vertex(*this) /= divide;}
 
-    friend istream &operator>>(ifstream stream, Vertex &input_vertex) {
+    friend istream &operator>>(istream &stream, Vertex &input_vertex) {
         return stream >> input_vertex.x >> input_vertex.y;
     }
 
-    friend ostream &operator<<(ostream stream, const Vertex &input_vertex) {
+    friend ostream &operator<<(ostream &stream, const Vertex &input_vertex) {
         return stream << input_vertex.x << input_vertex.y;
     }
 
