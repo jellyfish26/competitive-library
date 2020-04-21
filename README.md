@@ -1,20 +1,26 @@
 # くらげ〜の競プロライブラリ
 くらげ〜の競プロ用のライブラリです．(適当に作成してます)  
-gh-pagesは多分作る
+gh-pagesは多分作る  
+あと，ReadMe更新し忘れてるとき多いw
 
-# jellyfish26's competitive programming library
-This is my competition programming library. (I'm making it up as I see fit.)  
-gh-pages will probably make
+## ライブラリ
 
+### データ構造
+- [BinaryIndexedTree](https://github.com/jellyfish26/competitive-library/blob/master/datastructure/BinaryIndexedTree.cpp)
+- [素集合データ構造(UnionFind)](https://github.com/jellyfish26/competitive-library/blob/master/datastructure/UnionFind.cpp)
 
-## Library
+### 幾何
+- [点（テンプレート）](https://github.com/jellyfish26/competitive-library/blob/master/geometry/Point.cpp)
 
-### データ構造(DataStructure)
-- [BIT(BinaryIndexedTree)](https://github.com/jellyfish26/competitive-library/blob/master/datastructure/BinaryIndexedTree.cpp)
-- [UnionFind](https://github.com/jellyfish26/competitive-library/blob/master/datastructure/UnionFind.cpp)
-
-### 幾何(Geometry)
-- [テンプレート(template)](https://github.com/jellyfish26/competitive-library/blob/master/geometry/template.cpp)
-
-### 数学(Math)
+### 数学
 - [ModInt](https://github.com/jellyfish26/competitive-library/blob/master/math/ModInt.cpp)
+
+### グラフ
+- [テンプレート](https://github.com/jellyfish26/competitive-library/blob/master/graph/template.cpp)
+- [オイラーツアー](https://github.com/jellyfish26/competitive-library/blob/master/graph/EulerTour.cpp)
+
+### カスタム
+あまり使わないデータ構造やアルゴリズムが分類されています．
+- [数え上げオイラーツアー](https://github.com/jellyfish26/competitive-library/blob/master/custom/CountUpEulerTour.cpp)
+
+
