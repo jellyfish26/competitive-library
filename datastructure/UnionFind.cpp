@@ -1,11 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Last updated 2020-4-18 (Disjoint set), ABC120-D Decayed Bridges
-struct UnionFind {
+// Last updated 2020-4-21 (Disjoint set), ABC120-D Decayed Bridges
+class UnionFind {
+private:
     vector<int> data;
 
-    explicit UnionFind(int size) : data(size, -1)  {}
+public:
+    explicit UnionFind(int data_size) : data(data_size, -1)  {}
 
     bool unite(int x, int y) {
         x = find(x), y = find(y);
@@ -16,12 +18,12 @@ struct UnionFind {
         return true;
     }
 
-    int find(int idx) {
-        if (data[idx] < 0) return idx;
-        else return (data[idx] = find(data[idx]));
+    int find(int index) {
+        if (data[index] < 0) return index;
+        else return (data[index] = find(data[index]));
     }
 
-    int size(int idx) {
-        return (-data[find(idx)]);
+    int size(int index) {
+        return (-data[find(index)]);
     }
 };
