@@ -2,6 +2,7 @@
 #include "template.cpp"
 using namespace std;
 
+// Last updated 2020-4-22
 template<typename T>
 class EulerTour {
 private:
@@ -32,7 +33,7 @@ public:
     // [left, right) = [first, second)
     pair<int, int> index_of_vertex(const int vertex) { return {euler_in[vertex], euler_out[vertex]}; }
 
-    int pre_oreder(const int vertex) {return euler_in[vertex]; }
+    int pre_order(const int vertex) {return euler_in[vertex]; }
 
     // When using it in a query, the closed-interval.
     int post_order(const int vertex) {return euler_out[vertex] - 1; }
