@@ -13,9 +13,9 @@ struct BinaryIndexedTree {
     }
 
     T sum(int idx) {
-        T count = 0;
-        for (int i = idx + 1; i > 0; i -= (i & -i)) count += data[i];
-        return count;
+        T count_up = 0;
+        for (int i = idx + 1; i > 0; i -= (i & -i)) count_up += data[i];
+        return count_up;
     }
 
     T sum_all() {
