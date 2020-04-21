@@ -32,10 +32,10 @@ public:
     // [left, right) = [first, second)
     pair<int, int> index_of_vertex(const int vertex) { return {euler_in[vertex], euler_out[vertex]}; }
 
-    int pre_oreder(const int vertex) {return euler_in[vertex].first; }
+    int pre_oreder(const int vertex) {return euler_in[vertex]; }
 
     // When using it in a query, the closed-interval.
-    int post_order(const int vertex) {return euler_out[vertex].second - 1; }
+    int post_order(const int vertex) {return euler_out[vertex] - 1; }
 
     // read only
     const int &operator[] (const int index) const { return euler_data[index]; }
