@@ -3,57 +3,57 @@ using namespace std;
 
 
 // Last updated 2020-4-18, ABC139-F Engines
-struct Vertex {
+struct Point {
     double x, y;
     
-    Vertex() : x(0), y(0) {}
-    Vertex(double x, double y) : x(x), y(y) {}
+    Point() : x(0), y(0) {}
+    Point(double x, double y) : x(x), y(y) {}
 
-    Vertex &operator+=(const Vertex &input_vertex) {
+    Point &operator+=(const Point &input_vertex) {
         x += input_vertex.x;
         y += input_vertex.y;
         return *this;
     }
 
-    Vertex &operator-=(const Vertex &input_vertex) {
+    Point &operator-=(const Point &input_vertex) {
         x -= input_vertex.x;
         y -= input_vertex.y;
         return *this;
     }
 
-    Vertex &operator*=(double times) {
+    Point &operator*=(double times) {
         x *= times;
         y *= times;
         return *this;
     }
 
-    Vertex &operator/=(double divide) {
+    Point &operator/=(double divide) {
         x /= divide;
         y /= divide;
         return *this;
     }
 
-    Vertex operator+(const Vertex &input_vertex) const { return Vertex(*this) += input_vertex;}
+    Point operator+(const Point &input_vertex) const { return Point(*this) += input_vertex;}
 
-    Vertex operator-(const Vertex &input_vertex) const { return Vertex(*this) -= input_vertex;}
+    Point operator-(const Point &input_vertex) const { return Point(*this) -= input_vertex;}
 
-    Vertex operator*(double times) const { return Vertex(*this) *= times;}
+    Point operator*(double times) const { return Point(*this) *= times;}
 
-    Vertex operator/(double divide) const { return Vertex(*this) /= divide;}
+    Point operator/(double divide) const { return Point(*this) /= divide;}
 
-    friend istream &operator>>(istream &stream, Vertex &input_vertex) {
+    friend istream &operator>>(istream &stream, Point &input_vertex) {
         return stream >> input_vertex.x >> input_vertex.y;
     }
 
-    friend ostream &operator<<(ostream &stream, const Vertex &input_vertex) {
+    friend ostream &operator<<(ostream &stream, const Point &input_vertex) {
         return stream << input_vertex.x << input_vertex.y;
     }
 
-    double dot(const Vertex &input_vertex) const {
+    double dot(const Point &input_vertex) const {
         return x * input_vertex.x + y * input_vertex.y;
     }
 
-    double cross(const Vertex &input_vertex) const {
+    double cross(const Point &input_vertex) const {
         return x * input_vertex.y - y * input_vertex.x;
     }
 
@@ -65,12 +65,12 @@ struct Vertex {
         return sqrt(before_norm());
     }
 
-    Vertex rotate_orthant() const {
-        return Vertex{y, -x};
+    Point rotate_orthant() const {
+        return Point{y, -x};
     }
 
-    Vertex rotate_theta(double theta) {
-        return Vertex(cos(theta) * x - sin(theta) * y, sin(theta) * x + cos(theta) * y);
+    Point rotate_theta(double theta) {
+        return Point(cos(theta) * x - sin(theta) * y, sin(theta) * x + cos(theta) * y);
     }
 
     int orthant() const {
@@ -79,7 +79,7 @@ struct Vertex {
         return y > 0 ? 2 : 3;
     }
 
-    bool operator<(const Vertex &input_vertex) const {
+    bool operator<(const Point &input_vertex) const {
         int my_orthant = orthant(), input_orthant = input_vertex.orthant();
         if (my_orthant != input_orthant) return my_orthant < input_orthant;
         return cross(input_vertex) > 0;
