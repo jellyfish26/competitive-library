@@ -6,9 +6,9 @@ using namespace std;
 template<typename T>
 class EulerTour {
 private:
+    UnWeightedGraph<T> &graph;
     vector<int> euler_data, euler_in, euler_out;
     size_t data_size;
-    UnWeightedGraph<T> &graph;
 
     void dfs(int now_vertex, int before_vertex, int &reference_count) {
         euler_in[now_vertex] = reference_count;
@@ -33,7 +33,7 @@ public:
     // [left, right) = [first, second)
     pair<int, int> index_of_vertex(const int vertex) { return {euler_in[vertex], euler_out[vertex]}; }
 
-    int pre_order(const int vertex) {return euler_in[vertex]; }
+    int pre_oreder(const int vertex) {return euler_in[vertex]; }
 
     // When using it in a query, the closed-interval.
     int post_order(const int vertex) {return euler_out[vertex] - 1; }

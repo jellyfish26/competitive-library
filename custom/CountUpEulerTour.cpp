@@ -3,6 +3,7 @@
 #include "../datastructure/BinaryIndexedTree.cpp"
 using namespace std;
 
+// Last updated 2020-4-22
 template<typename T, typename bit_type>
 class CountUpEulerTour : public EulerTour<T> {
 private:
@@ -11,7 +12,7 @@ private:
 
     void reset_bit() { count_on_tree = BinaryIndexedTree<bit_type>(EulerTour<T>::size()); }
 
-    void vertex_update(int index, bit_type value, vector<bool> &is_already) {
+    void vertex_update(size_t index, bit_type value, vector<bool> &is_already) {
         if (is_already[EulerTour<T>::operator[](index)]) return;
         is_already[EulerTour<T>::operator[](index)] = true;
         count_on_tree.update(index, value);
@@ -22,12 +23,12 @@ public:
 
     void init_pre_order_count(bit_type base) {
         vector<bool> is_already_appeared(vertex_size, false);
-        for (int index = 0; index < EulerTour<T>::size(); index++) vertex_update(index, base, is_already_appeared);
+        for (size_t index = 0; index < EulerTour<T>::size(); index++) vertex_update(index, base, is_already_appeared);
     }
 
     void init_post_order_count(bit_type base) {
         vector<bool> is_already_appeared(vertex_size, false);
-        for (int index = EulerTour<T>::size() - 1; index >= 0; index--) vertex_update(index, base, is_already_appeared);
+        for (size_t index = EulerTour<T>::size() - 1; index >= 0; index--) vertex_update(index, base, is_already_appeared);
     }
 
     void reset_pre_order_count(bit_type base) {

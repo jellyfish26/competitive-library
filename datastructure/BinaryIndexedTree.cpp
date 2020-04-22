@@ -1,24 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Last updated 2020-4-21
+// Last updated 2020-4-22
 template<typename T>
 class BinaryIndexedTree {
 private:
     vector<T> data;
 
 public:
-    explicit BinaryIndexedTree(int data_size) : data(data_size + 1, 0) {}
+    explicit BinaryIndexedTree(size_t data_size) : data(data_size + 1, 0) {}
 
-    void update(int index, T value) {
-        for (int now_index = index + 1; now_index < data.size(); now_index += (now_index & -now_index)) {
+    void update(size_t index, T value) {
+        for (size_t now_index = index + 1; now_index < data.size(); now_index += (now_index & -now_index)) {
             data[now_index] += value;
         } 
     }
 
-    T sum(int index) {
+    T sum(size_t index) {
         T count_up = 0;
-        for (int now_index = index + 1; now_index > 0; now_index -= (now_index & -now_index)) {
+        for (size_t now_index = index + 1; now_index > 0; now_index -= (now_index & -now_index)) {
             count_up += data[now_index];
         }
         return count_up;

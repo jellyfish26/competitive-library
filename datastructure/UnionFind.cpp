@@ -1,13 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Last updated 2020-4-21 (Disjoint set), ABC120-D Decayed Bridges
+// Last updated 2020-4-22 (Disjoint set), ABC120-D Decayed Bridges
 class UnionFind {
 private:
     vector<int> data;
 
 public:
-    explicit UnionFind(int data_size) : data(data_size, -1)  {}
+    explicit UnionFind(size_t data_size) : data(data_size, -1)  {}
 
     bool unite(int x, int y) {
         x = find(x), y = find(y);
