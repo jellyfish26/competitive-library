@@ -17,6 +17,7 @@ gh-pagesは多分作る
 
 ### グラフ
 - [テンプレート](https://github.com/jellyfish26/competitive-library/blob/master/graph/template.cpp)
+- [単一始点最短路(ダイクストラ)](https://github.com/jellyfish26/competitive-library/blob/master/graph/Dijkstra.cpp)
 - [オイラーツアー](https://github.com/jellyfish26/competitive-library/blob/master/graph/EulerTour.cpp)
 
 ### カスタム

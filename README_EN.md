@@ -16,6 +16,7 @@ gh-pages will probably make
 
 ### Graph
 - [template](https://github.com/jellyfish26/competitive-library/blob/master/graph/template.cpp)
+- [Single Source Shortest Path(Dijkstra)](https://github.com/jellyfish26/competitive-library/blob/master/graph/Dijkstra.cpp)
 - [EulerTour](https://github.com/jellyfish26/competitive-library/blob/master/graph/EulerTour.cpp)
 
 ### Custom
