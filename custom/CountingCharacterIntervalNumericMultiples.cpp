@@ -16,7 +16,7 @@ private:
     }
 
 public:
-    explicit CountingCharacterIntervalNumericMultiples(string number, long long int radix, long long int mod, long long int remainder) : huge_number(number), radix(radix), mod(mod), remainder(remainder), data(number.length()), CumulativeSum<T>(number.length()) {}
+    explicit CountingCharacterIntervalNumericMultiples(string number, long long int radix, long long int mod, long long int remainder) : CumulativeSum<T>(number.length()), huge_number(number), radix(radix), mod(mod), remainder(remainder), data(number.length()) {}
 
     void build() override {
         long long int now = 0, base = 1;
