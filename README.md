@@ -1,7 +1,9 @@
 # くらげ〜の競プロライブラリ
 くらげ〜の競プロ用のライブラリです．(適当に作成してます)  
-gh-pagesは多分作る  
-あと，ReadMe更新し忘れてるとき多いw
+[GitHubPages](https://jellyfish26.github.io/competitive-library/ja)
+リポジトリ>GitHubPages>ReadMeの順番に情報が新しいです
+
+この下は更新するのがめんどいから気まぐれ．
 
 ## ライブラリ
 

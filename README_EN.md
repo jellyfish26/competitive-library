@@ -1,6 +1,9 @@
 # jellyfish26's competitive programming library
 This is my competition programming library. (I'm making it up as I see fit.)  
-gh-pages will probably make
+[GitHubPages](https://jellyfish26.github.io/competitive-library/ja)
+Repository>GitHubPages>ReadMe is the new information in the order
+
+The following information will be updated on a whim.
 
 ## Library
 
