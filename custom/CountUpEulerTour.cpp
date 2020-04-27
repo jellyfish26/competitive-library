@@ -3,7 +3,7 @@
 #include "../datastructure/BinaryIndexedTree.cpp"
 using namespace std;
 
-// Last updated 2020-4-22
+// Last updated 2020-4-27
 template<typename T, typename bit_type>
 class CountUpEulerTour : public EulerTour<T> {
 private:
@@ -33,12 +33,12 @@ public:
 
     void reset_pre_order_count(bit_type base) {
         reset_bit();
-        init_pre_order(base);
+        init_pre_order_count(base);
     }
 
     void reset_post_order_count(bit_type base) {
         reset_bit();
-        init_post_order(base);
+        init_post_order_count(base);
     }
 
     void reset_count() { reset_bit(); }
