@@ -2,9 +2,9 @@
 using namespace std;
 const int MOD = 1e9+ 7;
 
-// Last updated 2020-04-18
+// Last updated 2020-04-30
 // Note: Inputs must be within the 32bit integer range (within the mod range).
-template<int mod>
+template<int64_t mod>
 struct ModInt {
     int64_t value;
 
@@ -78,6 +78,8 @@ struct ModInt {
         }
         return ret;
     }
+
+    static const int64_t get_mod() { return mod; }
 };
 
 using modint = ModInt<MOD>;

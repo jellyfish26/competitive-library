@@ -50,7 +50,7 @@ private:
 
 public:
     explicit SpecifiedSquareFilledCount(long long int max_height, long long int max_width, long long int search_height, long long int search_width) 
-    : max_mass(max_height, max_width), search_range(search_height, search_width), data(search_height * search_width + 1, 0) {
+        : max_mass(max_height, max_width), search_range(search_height, search_width), data(search_height * search_width + 1, 0) {
         data[0] = (max_height - search_height + 1) * (max_width - search_width + 1);
     }
 
