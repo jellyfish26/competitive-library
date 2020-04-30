@@ -2,7 +2,7 @@
 #include "template.cpp"
 using namespace std;
 
-// Last updated 2020-4-28
+// Last updated 2020-4-30
 template<typename T>
 class Dijkstra {
 private:
@@ -21,10 +21,10 @@ private:
     }
 
 protected:
-    void exec_dijkstra(size_T start_vertex, function<bool(size_t, T)> update_function, vector<T> &now_distance) {
+    void exec_dijkstra(size_t start_vertex, function<bool(size_t, T)> update_function, vector<T> &now_distance) {
         priority_queue<pair<T, size_t>, vector<pair<T, size_t>>, greater<>> next_edges;
         now_distance[start_vertex] = 0;
-        next_edges.emplace(start_vertex, now_distance[start_vertex]);
+        next_edges.emplace(now_distance[start_vertex], start_vertex);
         while (!next_edges.empty()) {
             size_t now_vertex;
             T now_cost;

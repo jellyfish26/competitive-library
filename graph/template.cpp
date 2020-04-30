@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Last updated 2020-4-21
+// Last updated 2020-4-30
 template<typename T>
 struct edge {
     pair<int, int> arrow;
@@ -19,19 +19,24 @@ struct edge {
 };
 
 template<typename T>
-struct UnWeightedGraph : vector<vector<edge<T>>> {
+struct UnWeightedGraph {
     bool is_directed_graph;
-    explicit UnWeightedGraph(int size, bool is_directed_graph) : vector<vector<edge<T>>>(size), is_directed_graph(is_directed_graph) {}
+    vector<vector<edge<T>>> data;
+    explicit UnWeightedGraph(size_t size, bool is_directed_graph) : data(size), is_directed_graph(is_directed_graph) {}
 
     void add_edge(int source, int to) {
-        vector<vector<edge<T>>>::operator[](source).emplace_back(to, 0);
-        if (!is_directed_graph) vector<vector<edge<T>>>::operator[](to).emplace_back(source, 0);
+        data[source].emplace_back(to, 0);
+        if (!is_directed_graph) data[to].emplace_back(source, 0);
     }
+
+    vector<edge<T>> &operator[] (const size_t index) { return data[index]; }
+
+    const size_t size() const { return data.size(); }
 };
 
 template<typename T>
 struct WeightedGraph : UnWeightedGraph<T> {
-    explicit WeightedGraph(int size, bool is_directed_graph) : UnWeightedGraph<T>(size, is_directed_graph) {}
+    explicit WeightedGraph(size_t size, bool is_directed_graph) : UnWeightedGraph<T>(size, is_directed_graph) {}
 
     void add_edge(int source, int to, T cost) {
         UnWeightedGraph<T>::operator[](source).emplace_back(to, cost);
