@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// LastUpdate 2020-05-01
 template<typename T>
 class CumulativeSum {
 private:
@@ -28,6 +29,7 @@ public:
 
     /// [left, right)
     T query(size_t left_index, size_t right_index) {
-        return sum(right_index - 1) - sum(left_index - 1);
+        T ret = left_index == 0 ? 0 : sum(left_index - 1);
+        return sum(right_index - 1) - ret;
     }
 };
