@@ -3,7 +3,7 @@ using namespace std;
 
 // Last-Update 2020-05-04
 template<typename T>
-class UndoableLongestIncreaseingSubsequence {
+class UndoableLongestIncreasingSubsequence {
 private:
     struct operation_infomation {
         bool is_insert;
@@ -17,7 +17,7 @@ private:
     bool is_narrowly_sense;
 
 public:
-    explicit UndoableLongestIncreaseingSubsequence(bool is_narrowly_sense) : is_narrowly_sense(is_narrowly_sense) {}
+    explicit UndoableLongestIncreasingSubsequence(bool is_narrowly_sense) : is_narrowly_sense(is_narrowly_sense) {}
 
     size_t update(T add) {
         typename multiset<T>::iterator iter;

@@ -2,18 +2,18 @@
 using namespace std;
 
 #include "../../graph/EulerTour.cpp"
-#include "../../custom/extension_algorithm/UndoableLongestIncreaseingSubsequence.cpp"
+#include "../../custom/extension_algorithm/UndoableLongestIncreasingSubsequence.cpp"
 
 // Last-Update 2020-05-04
 template<typename T>
-class LongestIncreaseingSubsequenceTree {
+class LongestIncreasingSubsequenceTree {
 private:
 
     UnWeightedGraph<T> tree;
     EulerTour<T> euler_tour;
     vector<T> vertex_number_data;
     vector<size_t> vertex_lis_size;
-    UndoableLongestIncreaseingSubsequence<T> count_lis;
+    UndoableLongestIncreasingSubsequence<T> count_lis;
 
     void dfs() {
         for (size_t index = 0; index < euler_tour.size(); index++) {
@@ -31,7 +31,7 @@ private:
     }
 
 public:
-    explicit LongestIncreaseingSubsequenceTree(size_t vertex_size, bool is_narrowly_sense) 
+    explicit LongestIncreasingSubsequenceTree(size_t vertex_size, bool is_narrowly_sense) 
         : tree(vertex_size, false), euler_tour(tree), vertex_number_data(vertex_size, 0), vertex_lis_size(vertex_size) , count_lis(is_narrowly_sense) {}
     
     void add_edge(size_t source, size_t to) { tree.add_edge(source, to); }
