@@ -43,7 +43,7 @@ public:
         }
     }
 
-    // [keft, right)
+    // [left, right)
     M query(size_t left_index, size_t right_index) {
         M left = identity_element, right = identity_element;
         left_index += base_data_size;
