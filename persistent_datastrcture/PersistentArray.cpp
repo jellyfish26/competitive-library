@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Last updated 2020-05-06
+// Last updated 2020-05-07
 template<typename T, size_t node_division = 2>
-class PersistentVector {
+class PersistentArray {
 private:
     struct Node {
         T data;
@@ -16,7 +16,7 @@ private:
 
     vector<Node*> generation_root;
     vector<size_t> depth_range;
-    size_t node_depth, data_size;
+    size_t node_depth{}, data_size;
 
     void init_first_generation(const vector<T> &init_data) {
         stack<tuple<size_t, size_t, Node*, size_t>> explore; // <left, right, now_node, depth> and [left, right)
@@ -71,8 +71,10 @@ private:
         return ret;
     }
 
-    void update_nodes(size_t index, T value) {
-        generation_root.push_back(new Node(*generation_root.back()));
+    void update_nodes(pair<size_t, T> update_content) {
+        size_t index;
+        T value;
+        tie(index, value) = update_content;
         Node* reference_node = generation_root.back();
         function<void(Node*, size_t, size_t)> operation = [](Node* now_node, size_t node_index, size_t depth) {
             now_node->child[node_index] = new Node(*(now_node->child[node_index]));
@@ -82,20 +84,53 @@ private:
     }
 
 public:
-    explicit PersistentVector(const vector<T> &init_data) : data_size(init_data.size()) {
+    explicit PersistentArray(size_t data_size) : data_size(data_size) {
+        init_depth();
+        init_first_generation(vector<T>());
+    }
+
+    explicit PersistentArray(size_t data_size, T init_value) : data_size(data_size) {
+        init_depth();
+        init_first_generation(vector<T>(data_size, init_value));
+    }
+
+    explicit PersistentArray(const vector<T> &init_data) : data_size(init_data.size()) {
         init_depth();
         init_first_generation(init_data);
     }
 
-    const T &get_data(size_t generation, size_t index) {
+    explicit PersistentArray(Node* root, const size_t data_size) : data_size(data_size) {
+        init_depth();
+        generation_root.push_back(root);
+    }
+
+    T get_data(size_t generation, size_t index) {
         return get_index_node(generation, index)->data;
     }
 
-    void update(size_t index, T value) {
-        update_nodes(index, value);
+    Node* get_generation_root(size_t generation) {
+        return generation_root[generation];
     }
 
-    size_t generation_size() {
+    void update(vector<pair<size_t, T>> update_contents) {
+        generation_root.push_back(new Node(*generation_root.back()));
+        for (auto content : update_contents) update_nodes(content);
+    }
+
+    void update(size_t index, T value) {
+        generation_root.push_back(new Node(*generation_root.back()));
+        update_nodes({index, value});
+    }
+
+    T operator[](size_t index) {
+        return get_data(generation_size() - 1, index);
+    }
+
+    size_t size() const {
+        return data_size;
+    }
+
+    size_t generation_size() const {
         return generation_root.size();
     }
 };
