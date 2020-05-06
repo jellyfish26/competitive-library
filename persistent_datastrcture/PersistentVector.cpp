@@ -7,14 +7,14 @@ class PersistentVector {
 private:
     struct Node {
         T data;
-        Node *child[node_division] = {};
+        vector<Node*> child;
 
-        Node() : data() {}
-
-        explicit Node(const T &data) : data(data) {}
+        Node() : data(), child(node_division) {}
+        explicit Node(const T &data) : data(data), child(node_division) {}
+        Node(const Node &node) : data(node.data), child(node.child) {}
     };
 
-    vector<Node*> persistent_root;
+    vector<Node*> generation_root;
     vector<size_t> depth_range;
     size_t node_depth, data_size;
 
@@ -22,7 +22,7 @@ private:
         stack<tuple<size_t, size_t, Node*, size_t>> explore; // <left, right, now_node, depth> and [left, right)
         explore.emplace(0, data_size, new Node(), node_depth);
 
-        persistent_root.push_back(get<2>(explore.top())); // root save
+        generation_root.push_back(get<2>(explore.top())); // root save
 
         while (!explore.empty()) {
             size_t left, right, depth;
@@ -56,7 +56,7 @@ private:
     }
 
     Node *get_index_node(size_t generation, size_t index) {
-        Node *ret = persistent_root[generation];
+        Node *ret = generation_root[generation];
         if (index >= data_size) throw out_of_range("out-of-range[" + to_string(index) + "]: The range that the program can reference is the half-open interval [0, " + to_string(data_size) +").");
         for (size_t explore_depth = node_depth; explore_depth > 0; explore_depth--) {
             size_t node_index = index / depth_range[explore_depth - 1];
@@ -64,6 +64,18 @@ private:
             index -= node_index * depth_range[explore_depth - 1];
         }
         return ret;
+    }
+
+    void update_nodes(size_t index, T value) {
+        generation_root.push_back(new Node(*generation_root.back()));
+        Node *reference_node = generation_root.back();
+        for (size_t explore_depth = node_depth; explore_depth > 0; explore_depth--) {
+            size_t node_index = index / depth_range[explore_depth - 1];
+            reference_node->child[node_index] = new Node(*(reference_node->child[node_index]));
+            reference_node = reference_node->child[node_index];
+            index -= node_index * depth_range[explore_depth - 1];
+        }
+        reference_node->data = value;
     }
 
 public:
@@ -74,5 +86,13 @@ public:
 
     const T &get_data(size_t generation, size_t index) {
         return get_index_node(generation, index)->data;
+    }
+
+    void update(size_t index, T value) {
+        update_nodes(index, value);
+    }
+
+    size_t generation_size() {
+        return generation_root.size();
     }
 };
