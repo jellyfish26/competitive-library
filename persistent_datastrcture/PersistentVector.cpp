@@ -55,26 +55,29 @@ private:
         for (size_t index = 1; index <= node_depth; index++) depth_range[index] = depth_range[index - 1] * node_division;
     }
 
-    Node *get_index_node(size_t generation, size_t index) {
-        Node *ret = generation_root[generation];
+    void node_explore(Node* &start_node, const function<void(Node*, size_t, size_t)> operation, size_t index) {
         if (index >= data_size) throw out_of_range("out-of-range[" + to_string(index) + "]: The range that the program can reference is the half-open interval [0, " + to_string(data_size) +").");
         for (size_t explore_depth = node_depth; explore_depth > 0; explore_depth--) {
             size_t node_index = index / depth_range[explore_depth - 1];
-            ret = ret->child[node_index];
+            operation(start_node, node_index, explore_depth);
+            start_node = start_node->child[node_index];
             index -= node_index * depth_range[explore_depth - 1];
         }
+    }
+
+    Node *get_index_node(size_t generation, size_t index) {
+        Node* ret = generation_root[generation];
+        node_explore(ret, [](Node* now_node, size_t node_index, size_t depth){}, index);
         return ret;
     }
 
     void update_nodes(size_t index, T value) {
         generation_root.push_back(new Node(*generation_root.back()));
-        Node *reference_node = generation_root.back();
-        for (size_t explore_depth = node_depth; explore_depth > 0; explore_depth--) {
-            size_t node_index = index / depth_range[explore_depth - 1];
-            reference_node->child[node_index] = new Node(*(reference_node->child[node_index]));
-            reference_node = reference_node->child[node_index];
-            index -= node_index * depth_range[explore_depth - 1];
-        }
+        Node* reference_node = generation_root.back();
+        function<void(Node*, size_t, size_t)> operation = [](Node* now_node, size_t node_index, size_t depth) {
+            now_node->child[node_index] = new Node(*(now_node->child[node_index]));
+        };
+        node_explore(reference_node, operation, index);
         reference_node->data = value;
     }
 
