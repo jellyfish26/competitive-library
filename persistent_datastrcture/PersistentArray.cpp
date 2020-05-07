@@ -92,7 +92,7 @@ public:
         init_first_generation(vector<T>());
     }
 
-    explicit PersistentArray(size_t data_size, T init_value) : data_size(data_size), node_data(data_size) {
+    PersistentArray(size_t data_size, T init_value) : data_size(data_size), node_data(data_size) {
         init_depth();
         init_first_generation(vector<T>(data_size, init_value));
     }
@@ -102,7 +102,7 @@ public:
         init_first_generation(init_data);
     }
 
-    explicit PersistentArray(Node* root, const size_t data_size) : data_size(data_size), node_data(data_size) {
+    PersistentArray(Node* root, const size_t data_size) : data_size(data_size), node_data(data_size) {
         init_depth();
         generation_root.push_back(root);
     }
@@ -141,11 +141,11 @@ public:
         return get_data(generation_size() - 1, index);
     }
 
-    size_t size() const {
+    [[nodiscard]] size_t size() const {
         return data_size;
     }
 
-    size_t generation_size() const {
+    [[nodiscard]] size_t generation_size() const {
         return generation_root.size();
     }
 };
