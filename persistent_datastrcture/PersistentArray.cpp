@@ -10,13 +10,14 @@ private:
         vector<Node*> child;
 
         Node() : data(), child(node_division) {}
-        explicit Node(const T &data) : data(data), child(node_division) {}
+        explicit Node(const T &data) : data(data), child(0) {}
         Node(const Node &node) : data(node.data), child(node.child) {}
     };
 
     vector<Node*> generation_root;
     vector<size_t> depth_range;
     size_t node_depth{}, data_size;
+    vector<vector<pair<T, size_t>>> node_data;
 
     void init_first_generation(const vector<T> &init_data) {
         stack<tuple<size_t, size_t, Node*, size_t>> explore; // <left, right, now_node, depth> and [left, right)
@@ -33,7 +34,8 @@ private:
             for (size_t index = 0; left + index * depth_range[depth - 1] < right; index++) {
                 size_t reference_index = left + index * depth_range[depth - 1];
                 if (depth == 1) {
-                    now_node->child[index] = new Node(init_data.empty() ? 0 : init_data[reference_index]);
+                    node_data[reference_index].emplace_back(init_data.empty() ? 0 : init_data[reference_index], 0);
+                    now_node->child[index] = new Node(node_data[reference_index].back().first);
                 } else {
                     Node *temp = new Node();
                     now_node->child[index] = temp;
@@ -59,7 +61,7 @@ private:
         if (index >= data_size) throw out_of_range("out-of-range[" + to_string(index) + "]: The range that the program can reference is the half-open interval [0, " + to_string(data_size) +").");
         for (size_t explore_depth = node_depth; explore_depth > 0; explore_depth--) {
             size_t node_index = index / depth_range[explore_depth - 1];
-            operation(start_node, node_index, explore_depth);
+            if (operation != nullptr) operation(start_node, node_index, explore_depth);
             start_node = start_node->child[node_index];
             index -= node_index * depth_range[explore_depth - 1];
         }
@@ -67,7 +69,7 @@ private:
 
     Node *get_index_node(size_t generation, size_t index) {
         Node* ret = generation_root[generation];
-        node_explore(ret, [](Node* now_node, size_t node_index, size_t depth){}, index);
+        node_explore(ret, nullptr, index);
         return ret;
     }
 
@@ -80,26 +82,27 @@ private:
             now_node->child[node_index] = new Node(*(now_node->child[node_index]));
         };
         node_explore(reference_node, operation, index);
-        reference_node->data = value;
+        node_data[index].emplace_back(value, generation_root.size() - 1);
+        reference_node->data = node_data[index].back().first;
     }
 
 public:
-    explicit PersistentArray(size_t data_size) : data_size(data_size) {
+    explicit PersistentArray(size_t data_size) : data_size(data_size), node_data(data_size) {
         init_depth();
         init_first_generation(vector<T>());
     }
 
-    explicit PersistentArray(size_t data_size, T init_value) : data_size(data_size) {
+    explicit PersistentArray(size_t data_size, T init_value) : data_size(data_size), node_data(data_size) {
         init_depth();
         init_first_generation(vector<T>(data_size, init_value));
     }
 
-    explicit PersistentArray(const vector<T> &init_data) : data_size(init_data.size()) {
+    explicit PersistentArray(const vector<T> &init_data) : data_size(init_data.size()), node_data(init_data.size()) {
         init_depth();
         init_first_generation(init_data);
     }
 
-    explicit PersistentArray(Node* root, const size_t data_size) : data_size(data_size) {
+    explicit PersistentArray(Node* root, const size_t data_size) : data_size(data_size), node_data(data_size) {
         init_depth();
         generation_root.push_back(root);
     }
@@ -120,6 +123,18 @@ public:
     void update(size_t index, T value) {
         generation_root.push_back(new Node(*generation_root.back()));
         update_nodes({index, value});
+    }
+
+    typename vector<pair<T, size_t>>::iterator generation_lower_bound(size_t index, T value) {
+        return lower_bound(node_data[index].begin(), node_data[index].end(), make_pair(value, (size_t) 0));
+    }
+
+    typename vector<pair<T, size_t>>::iterator generation_upper_bound(size_t index, T value) {
+        return upper_bound(node_data[index].begin(), node_data[index].end(), make_pair(value, (size_t) 0));
+    }
+
+    typename vector<pair<T, size_t>>::iterator generation_vector_end(size_t index) {
+        return node_data[index].end();
     }
 
     T operator[](size_t index) {
