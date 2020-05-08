@@ -92,11 +92,11 @@ private:
                 now_node->data += value;
                 continue;
             }
-            explore.emplace(now_node, depth, left_index, true);
             if (depth == 0) {
                 now_node->data += value;
                 continue;
             }
+            explore.emplace(now_node, depth, left_index, true);
             size_t right_index = left_index + (1<<(depth - 1));
             if (left_index <= index && index < right_index) {
                 now_node->child.first = new Node(*(now_node->child.first));
