@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Last updated 2020-4-26 (Disjoint set), ABC120-D Decayed Bridges
+// Last updated 2020-05-09
 class UnionFind {
 private:
     vector<int> data;
@@ -9,11 +9,11 @@ private:
 public:
     explicit UnionFind(size_t data_size) : data(data_size, -1)  {}
 
-    bool same(size_t x, size_t y) {
+    bool same(int x, int y) {
         return find(x) == find(y);
     }
 
-    bool unite(size_t x, size_t y) {
+    bool unite(int x, int y) {
         x = find(x), y = find(y);
         if(x == y) return false;
         if(data[x] > data[y]) swap(x, y);
