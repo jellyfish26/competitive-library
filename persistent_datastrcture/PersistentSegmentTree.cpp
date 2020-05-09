@@ -126,25 +126,25 @@ private:
 
 public:
     PersistentSegmentTree(const size_t data_size, function<Monoid(Monoid, Monoid)> merge, Monoid identity_element)
-    : data_size(data_size), merge(merge), identity_element(identity_element) {
+            : data_size(data_size), merge(merge), identity_element(identity_element) {
         init_depth();
         init_first_generation(vector<Monoid>());
     }
 
     PersistentSegmentTree (const size_t data_size, Monoid init_value, function<Monoid(Monoid, Monoid)> merge, Monoid identity_element)
-    : data_size(data_size), merge(merge), identity_element(identity_element) {
+            : data_size(data_size), merge(merge), identity_element(identity_element) {
         init_depth();
         init_first_generation(vector<Monoid>(data_size, init_value));
     }
 
     PersistentSegmentTree(const vector<Monoid> &init_data, function<Monoid(Monoid, Monoid)> merge, Monoid identity_element)
-    : data_size(init_data.size()), merge(merge), identity_element(identity_element) {
+            : data_size(init_data.size()), merge(merge), identity_element(identity_element) {
         init_depth();
         init_first_generation(init_data);
     }
 
     PersistentSegmentTree(Node* root, const size_t data_size, function<Monoid(Monoid, Monoid)> merge, Monoid identity_element)
-    : data_size(data_size), merge(merge), identity_element(identity_element) {
+            : data_size(data_size), merge(merge), identity_element(identity_element) {
         init_depth();
         generation_root.push_back(root);
     }
@@ -202,11 +202,21 @@ public:
         return query(generation_root.size() - 1, left_index, right_index);
     }
 
+    Node* get_generation_root(size_t generation) {
+        return generation_root[generation];
+    }
+
     [[nodiscard]] size_t size() const {
         return data_size;
     }
 
     [[nodiscard]] size_t generation_size() const {
         return generation_root.size();
+    }
+
+    PersistentSegmentTree<Monoid> &operator=(Node *node) {
+        generation_root = vector<Node*>();
+        generation_root.push_back(node);
+        return *this;
     }
 };
