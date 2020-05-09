@@ -107,6 +107,23 @@ private:
             }
         }
     }
+
+    Node *get_index_node(size_t generation, size_t index) {
+        Node* now_node = generation_root[generation];
+        size_t left = 0, depth = node_depth;
+        while (depth > 0) {
+            size_t interval = (1<<(depth - 1));
+            if (index < left + interval) {
+                now_node = now_node->child.first;
+            } else {
+                now_node = now_node->child.second;
+                left = left + interval;
+            }
+            depth--;
+        }
+        return now_node;
+    }
+
 public:
     explicit PersistentBIT(const size_t data_size) : data_size(data_size) {
         init_depth();
@@ -133,9 +150,25 @@ public:
         for (auto content : update_contents) update_node(content.first, content.second);
     }
 
+    void stay_generation_update(vector<pair<size_t, T>> update_contents) {
+        for (auto content : update_contents) update_node(content.first, content.second);
+    }
+
     void update(size_t index, T value) {
         generation_root.push_back(new Node(*generation_root.back()));
         update_node(index, value);
+    }
+
+    void stay_generation_update(size_t index, T value) {
+        update_node(index, value);
+    }
+
+    void next_generation() {
+        generation_root.push_back(new Node(*generation_root.back()));
+    }
+
+    T get_index_data(size_t generation, size_t index) {
+        return get_index_node(generation, index)->data;
     }
 
     T query(size_t generation, size_t explore_left_index, size_t explore_right_index) {
