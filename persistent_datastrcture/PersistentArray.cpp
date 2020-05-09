@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Last updated 2020-05-07
+// Last updated 2020-05-09
 template<typename T, size_t node_division = 2>
 class PersistentArray {
 private:
@@ -17,7 +17,6 @@ private:
     vector<Node*> generation_root;
     vector<size_t> depth_range;
     size_t node_depth{}, data_size;
-    vector<vector<pair<T, size_t>>> node_data;
 
     void init_first_generation(const vector<T> &init_data) {
         stack<tuple<size_t, size_t, Node*, size_t>> explore; // <left, right, now_node, depth> and [left, right)
@@ -34,8 +33,7 @@ private:
             for (size_t index = 0; left + index * depth_range[depth - 1] < right; index++) {
                 size_t reference_index = left + index * depth_range[depth - 1];
                 if (depth == 1) {
-                    node_data[reference_index].emplace_back(init_data.empty() ? 0 : init_data[reference_index], 0);
-                    now_node->child[index] = new Node(node_data[reference_index].back().first);
+                    now_node->child[index] = new Node(init_data.empty() ? 0 : init_data[reference_index]);
                 } else {
                     Node *temp = new Node();
                     now_node->child[index] = temp;
@@ -82,27 +80,26 @@ private:
             now_node->child[node_index] = new Node(*(now_node->child[node_index]));
         };
         node_explore(reference_node, operation, index);
-        node_data[index].emplace_back(value, generation_root.size() - 1);
-        reference_node->data = node_data[index].back().first;
+        reference_node->data = value;
     }
 
 public:
-    explicit PersistentArray(size_t data_size) : data_size(data_size), node_data(data_size) {
+    explicit PersistentArray(size_t data_size) : data_size(data_size) {
         init_depth();
         init_first_generation(vector<T>());
     }
 
-    PersistentArray(size_t data_size, T init_value) : data_size(data_size), node_data(data_size) {
+    PersistentArray(size_t data_size, T init_value) : data_size(data_size) {
         init_depth();
         init_first_generation(vector<T>(data_size, init_value));
     }
 
-    explicit PersistentArray(const vector<T> &init_data) : data_size(init_data.size()), node_data(init_data.size()) {
+    explicit PersistentArray(const vector<T> &init_data) : data_size(init_data.size()) {
         init_depth();
         init_first_generation(init_data);
     }
 
-    PersistentArray(Node* root, const size_t data_size) : data_size(data_size), node_data(data_size) {
+    PersistentArray(Node* root, const size_t data_size) : data_size(data_size) {
         init_depth();
         generation_root.push_back(root);
     }
@@ -120,32 +117,39 @@ public:
         for (auto content : update_contents) update_nodes(content);
     }
 
+    void stay_generation_update(vector<pair<size_t, T>> update_contents) {
+        for (auto content : update_contents) update_node(content.first, content.second);
+    }
+
     void update(size_t index, T value) {
         generation_root.push_back(new Node(*generation_root.back()));
         update_nodes({index, value});
     }
 
-    typename vector<pair<T, size_t>>::iterator generation_lower_bound(size_t index, T value) {
-        return lower_bound(node_data[index].begin(), node_data[index].end(), make_pair(value, (size_t) 0));
+    void stay_generation_update(size_t index, T value) {
+        update_nodes({index, value});
     }
 
-    typename vector<pair<T, size_t>>::iterator generation_upper_bound(size_t index, T value) {
-        return upper_bound(node_data[index].begin(), node_data[index].end(), make_pair(value, (size_t) 0));
+    void next_generation() {
+        generation_root.push_back(new Node(*generation_root.back()));
     }
 
-    typename vector<pair<T, size_t>>::iterator generation_vector_end(size_t index) {
-        return node_data[index].end();
-    }
-
-    T operator[](size_t index) {
+    const T operator[](size_t index) {
         return get_data(generation_size() - 1, index);
     }
 
-    [[nodiscard]] size_t size() const {
+    [[nodiscard]] size_t size() {
         return data_size;
     }
 
-    [[nodiscard]] size_t generation_size() const {
+    [[nodiscard]] size_t generation_size() {
         return generation_root.size();
+    }
+
+
+    PersistentArray<T> &operator=(Node *node) {
+        generation_root = vector<Node*>();
+        generation_root.push_back(node);
+        return *this;
     }
 };
