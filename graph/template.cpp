@@ -26,8 +26,8 @@ struct UnWeightedGraph {
     explicit UnWeightedGraph(size_t size, bool is_directed_graph) : data(size), is_directed_graph(is_directed_graph) {}
 
     void add_edge(int source, int to) {
-        data[source].emplace_back(to, 0);
-        if (!is_directed_graph) data[to].emplace_back(source, 0);
+        data[source].emplace_back(source, to, 0);
+        if (!is_directed_graph) data[to].emplace_back(to, source, 0);
     }
 
     vector<edge<T>> &operator[] (const size_t index) { return data[index]; }
@@ -40,7 +40,7 @@ struct WeightedGraph : UnWeightedGraph<T> {
     explicit WeightedGraph(size_t size, bool is_directed_graph) : UnWeightedGraph<T>(size, is_directed_graph) {}
 
     void add_edge(int source, int to, T cost) {
-        UnWeightedGraph<T>::operator[](source).emplace_back(to, cost);
-        if (!UnWeightedGraph<T>::is_directed_graph) UnWeightedGraph<T>::operator[](to).emplace_back(source, cost);
+        UnWeightedGraph<T>::operator[](source).emplace_back(source, to, cost);
+        if (!UnWeightedGraph<T>::is_directed_graph) UnWeightedGraph<T>::operator[](to).emplace_back(to, source, cost);
     }
 };
