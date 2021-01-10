@@ -1,29 +1,44 @@
-# くらげ〜の競プロライブラリ
-くらげ〜の競プロ用のライブラリです．(適当に作成してます)  
-[GitHubPages](https://jellyfish26.github.io/competitive-library/ja)
-リポジトリ>GitHubPages>ReadMeの順番に情報が新しいです
+# Competitive Library
+This Competitive Library is lazy made by jellyfish.  
+[Reference](https://jellyfish26.github.io/competitive-library/ja)
 
-この下は更新するのがめんどいから気まぐれ．
+## Library
+I implemented the following.
 
-## ライブラリ
+### Algorithm
+- Cumulative Sum
 
-### データ構造
-- [BinaryIndexedTree](https://github.com/jellyfish26/competitive-library/blob/master/datastructure/BinaryIndexedTree.cpp)
-- [素集合データ構造(UnionFind)](https://github.com/jellyfish26/competitive-library/blob/master/datastructure/UnionFind.cpp)
+### Data Structure
+- Binary Indexed Tree
+- Segment Tree
+- UnionFind
 
-### 幾何
-- [点（テンプレート）](https://github.com/jellyfish26/competitive-library/blob/master/geometry/Point.cpp)
+### Geometry
+- Affine Transformation
+- Calculation about circle
+- Matrix
+- Vertex (Calculation between vertices, etc..)
 
-### 数学
-- [ModInt](https://github.com/jellyfish26/competitive-library/blob/master/math/ModInt.cpp)
+### Graph
+- Base (Graph composition)
+- Euler Tour
+- Count up Euler Tour
+- Dijkstra
+- Kruskal
+- Lowest Common Ancestor (by doubling)
+- ReRooting (Omnidirectional? tree DP)
 
-### グラフ
-- [テンプレート](https://github.com/jellyfish26/competitive-library/blob/master/graph/template.cpp)
-- [単一始点最短路(ダイクストラ)](https://github.com/jellyfish26/competitive-library/blob/master/graph/Dijkstra.cpp)
-- [オイラーツアー](https://github.com/jellyfish26/competitive-library/blob/master/graph/EulerTour.cpp)
+### Math
+- ModInt (Int that can calculate modulo)
+- Combination
+- Factorial
+- Prime Factor
 
-### カスタム
-あまり使わないデータ構造やアルゴリズムが分類されています．
-- [数え上げオイラーツアー](https://github.com/jellyfish26/competitive-library/blob/master/custom/CountUpEulerTour.cpp)
+### Persistent Data Structure
+- Fast reference array (Support only reference of backward generation)
+- Array
+- Binary Indexded Tree
+- Segment Tree
+- Union Find
 
 
