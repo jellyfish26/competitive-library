@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 
 // Last Update 2021-02-13
@@ -35,18 +36,18 @@ void CumulativeSum<T>::build() {
 }
 
 template<typename T>
-T sum(size_t index) {
+T CumulativeSum<T>::sum(size_t index) {
     return data[index];
 }
 
 template<typename T>
-T sum_all() {
+T CumulativeSum<T>::sum_all() {
     return sum(data.size() - 1);
 }
 
 // [left, right)
 template<typename T>
-T query(size_t left_index, size_t right_index) {
+T CumulativeSum<T>::query(size_t left_index, size_t right_index) {
     T ret = (right_index == 0 ? 0 : sum(right_index - 1));
     ret -= (left_index == 0 ? 0 : sum(left_index - 1));
     return ret;
