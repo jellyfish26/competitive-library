@@ -25,7 +25,7 @@ CumulativeSum<T>::CumulativeSum(std::size_t size) : data(size, 0) {}
 
 template<typename T>
 void CumulativeSum<T>::update(std::size_t index, T value) {
-    data[index] += value;
+    data[index] = value;
 }
 
 template<typename T>
