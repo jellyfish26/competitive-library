@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <functional>
 
@@ -14,7 +15,7 @@ private:
     void build();
 
 public:
-    explicit SegmentTree(std::size_t N, const std::function<M(M, M)> merge, const M identity_element);
+    explicit SegmentTree(std::size_t data_size, const std::function<M(M, M)> merge, const M identity_element);
     explicit SegmentTree(const std::vector<M> &init_data, const std::function<M(M, M)> merge, const M identity_element);
 
     void update(std::size_t index, M value);
@@ -24,9 +25,9 @@ public:
 };
 
 template<typename M>
-void SegmentTree<M>::data_size_calc_and_init(std::size_t N) {
+void SegmentTree<M>::data_size_calc_and_init(std::size_t data_size) {
     base_data_size = 1;
-    while (base_data_size < N) {
+    while (base_data_size < data_size) {
         base_data_size <<= 1;
     }
     data = std::vector<M>(2 * base_data_size, identity_element);
@@ -40,8 +41,8 @@ void SegmentTree<M>::build() {
 }
 
 template<typename M>
-SegmentTree<M>::SegmentTree(std::size_t N, const std::function<M(M, M)> merge, const M identify_element) : merge(merge), identity_element(identity_element) {
-    data_size_calc_and_init(N);
+SegmentTree<M>::SegmentTree(std::size_t data_size, const std::function<M(M, M)> merge, const M identify_element) : merge(merge), identity_element(identity_element) {
+    data_size_calc_and_init(data_size);
 }
 
 template<typename M>
