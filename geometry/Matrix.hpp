@@ -1,4 +1,5 @@
 #pragma once
+#include <cassert>
 #include <cstdint>
 #include <istream>
 #include <vector>
@@ -6,13 +7,13 @@
 // Last Update 2021-02-18
 template<typename T>
 class Matrix {
-private:
+protected:
     std::vector<std::vector<T>> data;
     std::size_t height, width;
 
 public:
     Matrix(std::size_t height, std::size_t width);
-    explicit Matrix(std::size_t N);
+    Matrix(std::size_t N);
     Matrix(const Matrix &cp_mat);
 
     static Matrix gen_identity(std::size_t N);
@@ -27,15 +28,17 @@ public:
     Matrix operator*(const Matrix &target) const;
     Matrix operator^(std::uint64_t power) const;
 
+    Matrix &operator=(const Matrix &target);
+
     template<typename A>
     friend std::istream &operator>>(std::istream &stream, Matrix<A> &target);
 
     template<typename A>
     friend std::ostream &operator<<(std::ostream &stream, Matrix<A> &target);
-    template<typename A>
-    friend std::ostream &operator<<(std::ostream &stream, Matrix<A> target);
 
     const std::vector<T> &operator[](std::size_t index);
+
+    void update(std::size_t hi, std::size_t wi, T value);
 
     std::size_t get_height();
     std::size_t get_width();
@@ -140,6 +143,14 @@ Matrix<T> Matrix<T>::operator^(std::uint64_t power) const {
 }
 
 template<typename T>
+Matrix<T> &Matrix<T>::operator=(const Matrix<T> &target) {
+    this->data = target.data;
+    this->height = target.height;
+    this->width = target.width;
+    return *this;
+}
+
+template<typename T>
 std::istream &operator>>(std::istream &stream, Matrix<T> &target) {
     for (std::size_t hi = 0; hi < target.height; hi++) {
         for (std::size_t wi = 0; wi < target.width; wi++) {
@@ -162,20 +173,13 @@ std::ostream &operator<<(std::ostream &stream, Matrix<T> &target) {
 }
 
 template<typename T>
-std::ostream &operator<<(std::ostream &stream, Matrix<T> target) {
-    for (std::size_t hi = 0; hi < target.height; hi++) {
-        stream << "[";
-        for (std::size_t wi = 0; wi < target.width; wi++) {
-            stream << target.data[hi][wi];
-            stream << (wi + 1 == target.width ? "]\n" : ", ");
-        }
-    }
-    return stream;
+const std::vector<T> &Matrix<T>::operator[](std::size_t index) {
+    return data[index];
 }
 
 template<typename T>
-const std::vector<T> &Matrix<T>::operator[](std::size_t index) {
-    return data[index];
+void Matrix<T>::update(std::size_t hi, std::size_t wi, T value) {
+    data[hi][wi] = value;
 }
 
 template<typename T>
