@@ -34,6 +34,7 @@ protected:
 
 public:
     WeightedGraph(std::size_t size, bool is_directed);
+    WeightedGraph(const WeightedGraph<T> &target);
     
     void add_edge(int src, int to, T cost);
 
@@ -43,6 +44,9 @@ public:
 
 template<typename T>
 WeightedGraph<T>::WeightedGraph(std::size_t size, bool is_directed) : graph(size), is_directed(is_directed) {}
+
+template<typename T>
+WeightedGraph<T>::WeightedGraph(const WeightedGraph<T> &target) : graph(target.graph), is_directed(target.is_directed) {}
 
 template<typename T>
 void WeightedGraph<T>::add_edge(int src, int to, T cost) {
