@@ -12,7 +12,7 @@ public:
     Edge(int to, T cost);
     Edge(const Edge &target);
 
-    edge &operator=(const int &vt);
+    Edge &operator=(const int &vt);
 
     operator int() const { return to; }
 };
@@ -28,10 +28,11 @@ Edge<T>::Edge(const Edge<T> &target) : src(target.src), to(target.to), cost(targ
 
 template<typename T>
 class WeightedGraph {
-public:
+protected:
     std::vector<std::vector<Edge<T>>> graph;
     const bool is_directed;
 
+public:
     WeightedGraph(std::size_t size, bool is_directed);
     
     void add_edge(int src, int to, T cost);
@@ -41,11 +42,11 @@ public:
 };
 
 template<typename T>
-WeightedGraph<T>::WeightedGraph(std::size_t size, bool is_directed) : data(size), is_directed(is_directed) {}
+WeightedGraph<T>::WeightedGraph(std::size_t size, bool is_directed) : graph(size), is_directed(is_directed) {}
 
 template<typename T>
 void WeightedGraph<T>::add_edge(int src, int to, T cost) {
-    graph[src].emplce_back(src, to, cost);
+    graph[src].emplace_back(src, to, cost);
     if (!is_directed) {
         graph[to].emplace_back(to, src, cost);
     }
