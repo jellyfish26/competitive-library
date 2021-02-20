@@ -1,4 +1,5 @@
 #pragma once
+#include <cstddef>
 #include <functional>
 #include <limits>
 #include <queue>
@@ -9,12 +10,11 @@
 // Last Update 2021-02-20
 template<typename T>
 class Dijkstra : public WeightedGraph<T> {
-private:
+protected:
     std::vector<std::vector<T>> dist;
     std::vector<std::vector<int>> prev;
     const T MAX_INF;
 
-protected:
     void calc(int start);
 
 public:
