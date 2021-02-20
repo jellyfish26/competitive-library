@@ -27,11 +27,11 @@ public:
 
 template<typename T>
 Dijkstra<T>::Dijkstra(std::size_t size, bool is_directed)
-: WeightedGraph<T>::WeightedGraph(size, is_directed), dist(size), prev(size), MAX_INF(std::numeric_limits<T>::max()) {}
+: WeightedGraph<T>(size, is_directed), dist(size), prev(size), MAX_INF(std::numeric_limits<T>::max()) {}
 
 template<typename T>
 Dijkstra<T>::Dijkstra(const WeightedGraph<T> &target)
-: WeightedGraph<T>::WeightedGraph(target), dist(target.size()), prev(target.size()), MAX_INF(std::numeric_limits<T>::max()) {}
+: WeightedGraph<T>(target), dist(target.size()), prev(target.size()), MAX_INF(std::numeric_limits<T>::max()) {}
 
 template<typename T>
 void Dijkstra<T>::calc(int start) {

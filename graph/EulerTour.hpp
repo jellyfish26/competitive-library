@@ -45,11 +45,11 @@ void EulerTour<T>::dfs(int now, int before, int &count) {
 
 template<typename T>
 EulerTour<T>::EulerTour(std::size_t size)
-: WeightedGraph<T>::WeightedGraph(size, false), euler_data(2 * size), euler_in(size), euler_out(size), data_size(0) {}
+: WeightedGraph<T>(size, false), euler_data(2 * size), euler_in(size), euler_out(size), data_size(0) {}
 
 template<typename T>
 EulerTour<T>::EulerTour(const WeightedGraph<T> &graph)
-: WeightedGraph<T>::WeightedGraph(graph), euler_data(2 * graph.size()), euler_in(graph.size()), euler_out(graph.size()) {}
+: WeightedGraph<T>(graph), euler_data(2 * graph.size()), euler_in(graph.size()), euler_out(graph.size()) {}
 
 template<typename T>
 void EulerTour<T>::build(int start) {

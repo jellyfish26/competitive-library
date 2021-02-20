@@ -5,7 +5,7 @@
 
 #include "Matrix.hpp"
 
-// Last Update 2021-02-19
+// Last Update 2021-02-20
 template<typename T>
 class Affine : public Matrix<T> {
 protected:
@@ -48,13 +48,13 @@ Affine<T> Affine<T>::gen_rot90() {
 }
 
 template<typename T>
-Affine<T>::Affine(): Matrix<T>::Matrix(Matrix<T>::gen_identity(3)) {}
+Affine<T>::Affine(): Matrix<T>(Matrix<T>::gen_identity(3)) {}
 
 template<typename T>
-Affine<T>::Affine(const Affine<T> &target) : Matrix<T>::Matrix(target) {}
+Affine<T>::Affine(const Affine<T> &target) : Matrix<T>(target) {}
 
 template<typename T>
-Affine<T>::Affine(const Matrix<T> &target) : Matrix<T>::Matrix(target) {}
+Affine<T>::Affine(const Matrix<T> &target) : Matrix<T>(target) {}
 
 template<typename T>
 Affine<T> Affine<T>::gen_scaling(T x, T y) {
