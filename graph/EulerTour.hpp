@@ -5,6 +5,7 @@
 
 #include "Base.hpp"
 
+// Last Update 2021-02-20
 template<typename T>
 class EulerTour : public WeightedGraph<T> {
 protected:

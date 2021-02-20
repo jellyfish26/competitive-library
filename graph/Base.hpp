@@ -40,7 +40,7 @@ public:
     void add_edge(int src, int to, T cost);
 
     const std::vector<Edge<T>> &operator[](std::size_t index) const;
-    std::size_t size() const;    
+    std::size_t size() const;
 };
 
 template<typename T>

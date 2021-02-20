@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-// Last Update 2021-02-15
+// Last Update 2021-02-20
 template<typename T>
 class BinaryIndexedTree {
 private:
@@ -13,13 +13,13 @@ public:
 
     void update(std::size_t index, T value);
 
-    T sum(std::size_t index);
-    T sum_all();
+    T sum(std::size_t index) const;
+    T sum_all() const;
 
-    T query(std::size_t left_index, std::size_t right_index);
+    T query(std::size_t left_index, std::size_t right_index) const;
 
-    std::size_t lower_bound(T value);
-    std::size_t upper_bound(T value);
+    std::size_t lower_bound(T value) const;
+    std::size_t upper_bound(T value) const;
 };
 
 template<typename T>
@@ -44,7 +44,7 @@ void BinaryIndexedTree<T>::update(std::size_t index, T value) {
 }
 
 template<typename T>
-T BinaryIndexedTree<T>::sum(std::size_t index) {
+T BinaryIndexedTree<T>::sum(std::size_t index) const {
     T ret = 0;
     for (std::size_t ni = index + 1; ni > 0; ni -= (ni & -ni)) {
         ret += data[ni];
@@ -53,13 +53,13 @@ T BinaryIndexedTree<T>::sum(std::size_t index) {
 }
 
 template<typename T>
-T BinaryIndexedTree<T>::sum_all() {
+T BinaryIndexedTree<T>::sum_all() const {
     return sum(data.size() - 1);
 }
 
 // [left, right)
 template<typename T>
-T BinaryIndexedTree<T>::query(std::size_t left_index, std::size_t right_index) {
+T BinaryIndexedTree<T>::query(std::size_t left_index, std::size_t right_index) const {
     T ret = 0;
     ret += (right_index == 0 ? 0 : sum(right_index - 1));
     ret -= (left_index == 0 ? 0 : sum(left_index - 1));
@@ -67,11 +67,11 @@ T BinaryIndexedTree<T>::query(std::size_t left_index, std::size_t right_index) {
 }
 
 template<typename T>
-std::size_t BinaryIndexedTree<T>::lower_bound(T value) {
+std::size_t BinaryIndexedTree<T>::lower_bound(T value) const { 
     return binary_search(value, false);
 }
 
 template<typename T>
-std::size_t BinaryIndexedTree<T>::upper_bound(T value) {
+std::size_t BinaryIndexedTree<T>::upper_bound(T value) const {
     return binary_search(value, true);
 }
