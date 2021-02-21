@@ -31,8 +31,8 @@ Kruskal<T>::Kruskal(const WeightedGraph<T> &graph) : WeightedGraph<T>(graph, fal
 
 template<typename T>
 void Kruskal<T>::build() {
-    for (std::vector<Edge<T>> &vertex : WeightedGraph<T>::graph) {
-        for (Edge<T> &now : vertex) {
+    for (const std::vector<Edge<T>> &vertex : WeightedGraph<T>::graph) {
+        for (const Edge<T> &now : vertex) {
             edges.emplace_back(now);
         }
     }
