@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <istream>
 
-// Last Update 2021-02-22
+// Last Update 2021-02-23
 template<std::int64_t MOD>
 class ModInt {
 protected:
@@ -36,6 +36,7 @@ public:
     ModInt &operator=(const ModInt &target);
 
     ModInt pow(std::int64_t n) const;
+    static std::int64_t get_mod();
 
     template<std::int64_t X>
     friend std::istream &operator>>(std::istream &stream, ModInt<X> &target);
@@ -65,8 +66,8 @@ ModInt<MOD> ModInt<MOD>::inverse() const {
     std::int64_t u = 1, v = 0;
     while (p) {
         std::int64_t tmp = base / p;
-        swap(base -= tmp * p, p);
-        swap(u -= tmp * v, v);
+        std::swap(base -= tmp * p, p);
+        std::swap(u -= tmp * v, v);
     }
     return ModInt(u);
 }
@@ -157,6 +158,11 @@ ModInt<MOD> ModInt<MOD>::pow(std::int64_t n) const {
         n >>= 1;
     }
     return ret;
+}
+
+template<std::int64_t MOD>
+std::int64_t ModInt<MOD>::get_mod() {
+    return MOD;
 }
 
 template<std::int64_t MOD>

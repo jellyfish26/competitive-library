@@ -5,4 +5,6 @@ project(competitive-library)
 add_subdirectory(datastructure)
 
 add_executable(Main main.cpp)
-target_link_libraries(Main PUBLIC datastructure)
+target_link_libraries(
+    Main datastructure
+)
